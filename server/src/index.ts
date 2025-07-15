@@ -9,9 +9,7 @@ const msgpack = require('msgpack-lite');
 const app = express();
 const PORT = 3000;
 
-
 app.use(cors());
-
 
 app.use((req, res, next) => {
   const contentType = req.headers['content-type'];
@@ -32,7 +30,6 @@ app.use((req, res, next) => {
   }
 });
 
-
 app.get('/schema', (_req, res) => {
   const schema = fromZodSchema(requestSchema);
   res.setHeader('Content-Type', 'application/json');
@@ -48,6 +45,16 @@ app.post('/predict', (req, res) => {
 
   const { requestId } = parseResult.data;
 
+
+  const randomConfidence = +(Math.random() * 0.5 + 0.5).toFixed(2);
+  const randomText = Math.random().toString(36).substring(2, 9).toUpperCase();
+  const randomRect = [
+    Math.floor(Math.random() * 800),
+    Math.floor(Math.random() * 600),
+    Math.floor(Math.random() * 200) + 50,
+    Math.floor(Math.random() * 100) + 20,
+  ];
+
   const response = {
     requestId: requestId || uuidv4(),
     time: {
@@ -59,9 +66,9 @@ app.post('/predict', (req, res) => {
     objects: [
       {
         id: [1],
-        text: 'A123BC77',
-        rect: [512, 384, 120, 40],
-        confidence: 0.95,
+        text: randomText,
+        rect: randomRect,
+        confidence: randomConfidence,
       },
     ],
   };
@@ -75,6 +82,18 @@ app.post('/predict', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.json(response);
   }
+});
+
+app.all('/predict', (_req, res) => {
+  res.status(405).send('Method Not Allowed');
+});
+
+app.all('/schema', (_req, res) => {
+  res.status(405).send('Method Not Allowed');
+});
+
+app.use((_req, res) => {
+  res.status(404).send('Not Found');
 });
 
 app.listen(PORT, () => {
