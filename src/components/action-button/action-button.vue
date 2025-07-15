@@ -1,5 +1,26 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
+import { v4 as uuidv4 } from 'uuid';
+
+const fetchResult = async () => {
+	try {
+		const uuid = uuidv4();
+		const response = await fetch('http://localhost:3000/predict', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				requestId: uuid,
+				image: '123',
+			}),
+		});
+		const result = await response.json();
+		console.log(result);
+	} catch (error) {
+		console.error(error);
+	}
+};
 
 // const props = defineProps<{
 // 	status: string;
@@ -13,6 +34,8 @@ import { computed } from 'vue';
 
 // const hasFireRects = computed(() => props.fireRects.length > 0);
 const hasFireRects = computed(() => 0 > 0);
+
+onMounted(fetchResult);
 </script>
 
 <template>

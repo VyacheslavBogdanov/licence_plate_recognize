@@ -78,7 +78,6 @@
 	&__icon {
 		display: flex;
 		position: absolute;
-		transform: rotate(180deg);
 		left: 10px;
 		height: 30px;
 	}

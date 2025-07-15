@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { onMounted } from 'vue';
 // import type { MessageType } from '../utils/types';
 
 // const props = defineProps<{
@@ -55,7 +55,6 @@ import { computed } from 'vue';
 	&__icon {
 		display: flex;
 		position: absolute;
-		transform: rotate(180deg);
 		left: 10px;
 		height: 30px;
 	}
