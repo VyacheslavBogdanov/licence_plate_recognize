@@ -37,7 +37,7 @@ export const useGrzStore = defineStore('grz', {
 			}
 		},
 		clear() {
-			this.result = null; // оставляем изображение
+			this.result = null;
 			this.error = '';
 		},
 	},
