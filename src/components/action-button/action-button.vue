@@ -26,6 +26,7 @@ const fetchResult = async () => {
 		store.setResult(result);
 	} catch (error) {
 		console.error(error);
+		store.setError('Ошибка изображения. Пожалуйста попробуйте другое.');
 	}
 };
 
@@ -34,16 +35,33 @@ const clear = () => store.clear();
 </script>
 
 <template>
-	<button v-if="hasResult" class="clear" @click="clear">
-		<span class="clear__name">Очистить</span>
-	</button>
-	<button v-else class="fire-detect" @click="fetchResult" :disabled="!store.imageBase64">
-		<span class="fire-detect__name">Распознать</span>
-	</button>
+	<div class="action-button">
+		<button v-if="hasResult && store.imageBase64" class="clear" @click="clear">
+			<span class="clear__name">Очистить</span>
+		</button>
+		<button
+			v-if="!hasResult && store.imageBase64"
+			class="detect"
+			@click="fetchResult"
+			:disabled="!store.imageBase64"
+		>
+			<span class="detect__name">Распознать</span>
+		</button>
+	</div>
 </template>
 
 <style lang="scss" scoped>
 @import '../../styles/variables.scss';
+
+.action-button {
+	width: 200px;
+	height: 100px;
+	min-width: 200px;
+	min-height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
 .clear {
 	position: relative;
@@ -77,7 +95,7 @@ const clear = () => store.clear();
 	}
 }
 
-.fire-detect {
+.detect {
 	position: relative;
 	height: 50px;
 	padding: 0 30px;

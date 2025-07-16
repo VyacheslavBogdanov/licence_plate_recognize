@@ -6,9 +6,12 @@ const hasResult = computed(() => !!store.result?.objects?.length);
 </script>
 
 <template>
-	<div v-if="hasResult" :class="['result', 'result--fire']">
+	<div v-if="hasResult" :class="['result', 'result--found']">
 		<div class="result__icon">ⓘ</div>
 		<span>Автомобиль обнаружен</span>
+	</div>
+	<div v-if="store.error && !hasResult" class="error">
+		{{ store.error }}
 	</div>
 </template>
 
@@ -87,12 +90,12 @@ const hasResult = computed(() => !!store.result?.objects?.length);
 		height: 30px;
 	}
 
-	&--fire {
+	&--found {
 		background-color: #e0fde7;
 		color: $color-success;
 	}
 
-	&--no-fire {
+	&--not-found {
 		background-color: #f2dee0;
 		color: $color-error;
 	}
@@ -101,5 +104,22 @@ const hasResult = computed(() => !!store.result?.objects?.length);
 		background-color: #e3e3ff;
 		color: $color-primary;
 	}
+}
+.error {
+	position: absolute;
+	top: 440px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 30;
+	background: #fff;
+	border: 2px solid #e81123;
+	color: #e81123;
+	padding: 14px 26px;
+	font-size: 18px;
+	border-radius: 8px;
+	font-weight: 600;
+	box-shadow: 0 2px 12px rgba(120, 0, 0, 0.11);
+	opacity: 0.96;
+	pointer-events: none;
 }
 </style>
