@@ -1,7 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useGrzStore } from '@/stores/store';
+const store = useGrzStore();
+const hasResult = computed(() => !!store.result?.objects?.length);
+</script>
 
 <template>
-	<div v-if="1 > 0" :class="['result', 'result--fire']">
+	<div v-if="hasResult" :class="['result', 'result--fire']">
 		<div class="result__icon">ⓘ</div>
 		<span>Автомобиль обнаружен</span>
 	</div>

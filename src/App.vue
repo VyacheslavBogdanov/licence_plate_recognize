@@ -20,11 +20,12 @@ import SearchResult from './components/search-result/search-result.vue';
 @import './styles/variables.scss';
 
 #app {
-	// min-width: 1550px;
-	// height: 800px;
+	min-width: 550px;
+	height: 3000px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	background-color: #f9f9f9;
 
 	// .app {
 	// width: 50%;

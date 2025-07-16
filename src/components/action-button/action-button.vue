@@ -1,48 +1,43 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { computed } from 'vue';
+import { useGrzStore } from '@/stores/store';
 import { v4 as uuidv4 } from 'uuid';
 
+const HOST_URL = import.meta.env.VITE_HOST_URL;
+
+const store = useGrzStore();
+
 const fetchResult = async () => {
+	if (!store.imageBase64) return;
 	try {
 		const uuid = uuidv4();
-		const response = await fetch('http://localhost:3000/predict', {
+		const response = await fetch(`${HOST_URL}/predict`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
 				requestId: uuid,
-				image: '123',
+				image: store.imageBase64,
+				imageType: 'jpeg',
 			}),
 		});
 		const result = await response.json();
-		console.log(result);
+		store.setResult(result);
 	} catch (error) {
 		console.error(error);
 	}
 };
 
-// const props = defineProps<{
-// 	status: string;
-// 	fireRects: { top: number; left: number; width: number; height: number }[];
-// }>();
-
-// const emit = defineEmits<{
-// 	(event: 'sendRequest'): void;
-// 	(event: 'clearPreview'): void;
-// }>();
-
-// const hasFireRects = computed(() => props.fireRects.length > 0);
-const hasFireRects = computed(() => 0 > 0);
-
-onMounted(fetchResult);
+const hasResult = computed(() => !!store.result?.objects?.length);
+const clear = () => store.clear();
 </script>
 
 <template>
-	<button v-if="hasFireRects" class="clear">
+	<button v-if="hasResult" class="clear" @click="clear">
 		<span class="clear__name">Очистить</span>
 	</button>
-	<button v-else class="fire-detect">
+	<button v-else class="fire-detect" @click="fetchResult" :disabled="!store.imageBase64">
 		<span class="fire-detect__name">Распознать</span>
 	</button>
 </template>

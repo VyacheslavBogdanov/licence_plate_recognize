@@ -1,6 +1,6 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 import { v4 as uuidv4 } from 'uuid';
 import { requestSchema } from './schema';
 import fromZodSchema from 'zod-to-json-schema';
@@ -75,10 +75,10 @@ app.post('/predict', (req, res) => {
 	const accept = req.headers['accept'];
 	if (accept === 'application/x-msgpack') {
 		const buffer = msgpack.encode(response);
-		res.setHeader('Content-Type', 'application/x-msgpack');
+		res.status(200).setHeader('Content-Type', 'application/x-msgpack');
 		res.send(buffer);
 	} else {
-		res.setHeader('Content-Type', 'application/json');
+		res.status(200).setHeader('Content-Type', 'application/json');
 		res.json(response);
 	}
 });
@@ -96,5 +96,5 @@ app.use((_req, res) => {
 });
 
 app.listen(PORT, () => {
-	console.log(`🚀 Сервер запущен на http://localhost:${PORT}`);
+	console.log(`Сервер запущен на http://localhost:${PORT}`);
 });

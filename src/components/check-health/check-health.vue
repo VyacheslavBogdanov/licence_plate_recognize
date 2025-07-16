@@ -1,30 +1,7 @@
-<script setup lang="ts">
-import { onMounted } from 'vue';
-// import type { MessageType } from '../utils/types';
-
-// const props = defineProps<{
-// 	messageTypes: MessageType[];
-// 	status: string;
-// }>();
-
-// const filteredMessageTypes = computed(() => {
-// 	if (props.status === 'active') {
-// 		return props.messageTypes.filter((type) => type.class === 'health--success');
-// 	}
-// 	return props.messageTypes.filter((type) => type.class === 'health--warning');
-// });
-</script>
+<script setup lang="ts"></script>
 
 <template>
 	<div>
-		<!-- <div
-			v-for="(type, index) in filteredMessageTypes"
-			:key="index"
-			:class="['health', type.class]"
-		>
-			<div class="health__icon">ⓘ</div>
-			<span>{{ type.message }}</span>
-		</div> -->
 		<div :class="['health', 'health--success']">
 			<div class="health__icon">ⓘ</div>
 			<span>Модуль включен</span>
