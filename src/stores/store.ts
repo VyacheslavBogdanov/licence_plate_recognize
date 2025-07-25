@@ -36,9 +36,12 @@ export const useGrzStore = defineStore('grz', {
 				this.error = error;
 			}
 		},
-		clear() {
+		clearFrames() {
 			this.result = null;
 			this.error = '';
+		},
+		clearImage() {
+			this.imageBase64 = '';
 		},
 	},
 });

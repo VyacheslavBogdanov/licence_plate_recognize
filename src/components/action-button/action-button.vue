@@ -31,22 +31,32 @@ const fetchResult = async () => {
 };
 
 const hasResult = computed(() => !!store.result?.objects?.length);
-const clear = () => store.clear();
+const clearFrames = () => store.clearFrames();
+const clearImage = () => store.clearImage();
 </script>
 
 <template>
 	<div class="action-button">
-		<button v-if="hasResult && store.imageBase64" class="clear" @click="clear">
-			<span class="clear__name">Очистить</span>
-		</button>
-		<button
-			v-if="!hasResult && store.imageBase64"
-			class="detect"
-			@click="fetchResult"
-			:disabled="!store.imageBase64"
-		>
-			<span class="detect__name">Распознать</span>
-		</button>
+		<div>
+			<button v-if="hasResult && store.imageBase64" class="clear" @click="clearFrames">
+				<span class="clear__name">Очистить рамки</span>
+			</button>
+		</div>
+		<div>
+			<button
+				v-if="!hasResult && store.imageBase64"
+				class="detect"
+				@click="fetchResult"
+				:disabled="!store.imageBase64"
+			>
+				<span class="detect__name">Распознать</span>
+			</button>
+		</div>
+		<div>
+			<button v-if="store.imageBase64" class="clear" @click="clearImage">
+				<span class="clear__name">Очистить изображение</span>
+			</button>
+		</div>
 	</div>
 </template>
 
@@ -54,17 +64,18 @@ const clear = () => store.clear();
 @import '../../styles/variables.scss';
 
 .action-button {
-	width: 200px;
+	width: 650px;
 	height: 100px;
 	min-width: 200px;
 	min-height: 100px;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 }
 
 .clear {
 	position: relative;
+	width: 300px;
 	height: 50px;
 	padding: 0 30px;
 	color: #513d3d;
